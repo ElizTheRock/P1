@@ -1,0 +1,120 @@
+Guía - Listar SubDominios con wordlist - py
+
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+
+import requests
+from os import path
+import argparse
+import sys
+
+def load_wordlist(file_path):
+    with open(file_path, 'r') as file:
+        wordlist = file.read().splitlines()
+    return wordlist
+
+def discover_subdomains(domain, wordlist_path):
+    wordlist = load_wordlist(wordlist_path)
+    for subdomain in wordlist:
+        url = f"https://{subdomain}.{domain}"
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                print(f"Subdomain found: {subdomain}.{domain}")
+        except requests.ConnectionError:
+            pass
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Script to discover subdomains.")
+    parser.add_argument("-T", "--target", dest="domain", type=str, help="Domain to discover subdomains for.")
+    parser.add_argument("-L", "--wordlist", dest="wordlist_path", type=str, help="Path to the wordlist file.")
+    args = parser.parse_args()
+    domain = args.domain
+    wordlist_path = args.wordlist_path
+
+    discover_subdomains(domain, wordlist_path)
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+Utilizar el scrip:
+
+python subdomain_discovery.py -T yourweb.com -L yourwordlist.txt
+///////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+Te explico el Codigo aqui :
+
+
+Primero : Vamos a importar los modulos que usaremos para realizar el listado de SubDominios.
+
+1. **Importaciones:**
+
+```python
+import requests
+from os import path
+import argparse
+import sys
+```
+
+Aquí importamos los módulos necesarios para el funcionamiento del script. `requests` para realizar solicitudes HTTP,
+`argparse` para manejar los argumentos de la línea de comandos, `sys` para la funcionalidad del sistema y `os.path` 
+para trabajar con rutas de archivo.
+
+2. **Función `load_wordlist`:**
+
+```python
+def load_wordlist(file_path):
+    with open(file_path, 'r') as file:
+        wordlist = file.read().splitlines()
+    return wordlist
+```
+
+Esta función carga un archivo de lista de palabras línea por línea y devuelve una lista de palabras.
+
+3. **Función `discover_subdomains`:**
+
+```python
+def discover_subdomains(domain, wordlist_path):
+    wordlist = load_wordlist(wordlist_path)
+    for subdomain in wordlist:
+        url = f"https://{subdomain}.{domain}"
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                print(f"Subdomain found: {subdomain}.{domain}")
+        except requests.ConnectionError:
+            pass
+```
+
+Esta función toma el dominio y la ruta del archivo de lista de palabras como parámetros.
+Luego, itera a través de las palabras de la lista de palabras, intenta acceder a los subdominios
+y, si obtiene una respuesta 200, imprime el subdominio.
+
+4. **Bloque `if __name__ == "__main__":`:**
+
+```python
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Script to discover subdomains.")
+    parser.add_argument("-T", "--target", dest="domain", type=str, help="Domain to discover subdomains for.")
+    parser.add_argument("-L", "--wordlist", dest="wordlist_path", type=str, help="Path to the wordlist file.")
+    args = parser.parse_args()
+    domain = args.domain
+    wordlist_path = args.wordlist_path
+
+    discover_subdomains(domain, wordlist_path)
+```
+
+Aquí se configura el analizador de argumentos con `argparse` para manejar los argumentos de la línea de comandos.
+Se definen dos argumentos, `-T/--target` para el dominio y `-L/--wordlist` para la ruta del archivo de lista de palabras.
+Luego, los valores de estos argumentos se pasan a la función `discover_subdomains`.
+
+Al ejecutar el script, proporcionas el dominio y el archivo de lista de palabras en el formato indicado, y el script intentará
+encontrar subdominios utilizando las palabras de la lista de palabras proporcionada.
+
+
+
+
+
+c4n7r0ck 2023
